@@ -12,18 +12,18 @@ const AuctionSchema = new mongoose.Schema({
 	bids: {
 		type: mongoose.Types.ObjectId,
 		ref: "Bid",
-		required: true,
+		// required: true, //esto no creo
 	},
-	start: {  //preguntar cómo se tendría que poner
-		type: Date,
-		default: Date.now,
-		required: true,
-	},
-	end: {
-		type: Date,
-		default: Date.now,
-		required: true,
-	},
+	// start: {  //preguntar cómo se tendría que poner
+	// 	type: Date,
+	// 	default: Date.now,
+	// 	required: true,
+	// },
+	// end: {
+	// 	type: Date,
+	// 	default: Date.now,
+	// 	required: true,
+	// },
 	status: {
 		type: String,
 		enum: ["Available", "Closed"],
@@ -38,12 +38,12 @@ const AuctionSchema = new mongoose.Schema({
 
 })
 
-AuctionSchema.virtual("bids", {
-	ref: "Bid",
-	foreignField: "product", 
-	localField: "_id",
-	justOne: false,
-  });
+// AuctionSchema.virtual("bids", {
+// 	ref: "Bid",
+// 	foreignField: "product", 
+// 	localField: "_id",
+// 	justOne: false,
+//   });
 
 
 // ESTO LUEGO:

@@ -40,3 +40,18 @@ module.exports.getCurrentUser = (req, res, next) => {
     })
     .catch(next)
 }
+
+
+module.exports.editProfile = (req, res, next) => {
+  if (req.file) {
+    req.body.image = req.file.path;
+  }
+  User.findByIdAndUpdate(req.currentUserId, req.body, {image: req.body})
+  .then((userUpdated)=> {
+    res.json(userUpdated)
+  })
+  .catch((err) => next(err))
+}
+
+
+

@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 const { REQUIRED_FIELD, INVALID_LENGTH, INVALID_NUMBER } = require("../config/errorMessages");
 
-const productSchema = new mongoose.Schema(
+const ProductSchema = new mongoose.Schema(
   {
     name: {
       type: String,
@@ -55,13 +55,20 @@ const productSchema = new mongoose.Schema(
   // },
 );
 
-productSchema.virtual("auctions", {
+ProductSchema.virtual("auctions", {
   ref: "Auction",
   foreignField: "product",
   localField: "_id",
   justOne: true, //Debemos poner false? que pasa si no ponemos nada o true??
 });
 
-const Product = mongoose.model("Product", productSchema);
+ProductSchema.virtual('favorites', {
+  ref: 'Favorite',
+  foreignField: 'product',
+  localField: '_id',
+  justOne: true,
+})
+
+const Product = mongoose.model("Product", ProductSchema);
 
 module.exports = Product;
