@@ -1,5 +1,5 @@
 const mongoose = require("mongoose");
-const { REQUIRED_FIELD } = require("../config/errorMessages");
+const { REQUIRED_FIELD, INVALID_LENGTH, INVALID_NUMBER } = require("../config/errorMessages");
 
 const productSchema = new mongoose.Schema(
   {
@@ -7,13 +7,22 @@ const productSchema = new mongoose.Schema(
       type: String,
       required: [true, REQUIRED_FIELD],
     },
+    shortDescription: {
+      type: String,
+      required: [true, REQUIRED_FIELD],
+      maxlength: [50, INVALID_LENGTH],
+      minlength: [20, INVALID_LENGTH],
+    },
     description: {
       type: String,
       required: [true, REQUIRED_FIELD],
+      minlength: [50, INVALID_LENGTH],
+      maxlength: [300, INVALID_LENGTH],
     },
-    initialprice: {
+    initialPrice: {
       type: Number,
       required: [true, REQUIRED_FIELD],
+      min:[1, INVALID_NUMBER]
     },
     state: {
       type: String,
@@ -24,15 +33,9 @@ const productSchema = new mongoose.Schema(
       type: [String],
       required: [true, REQUIRED_FIELD],
     },
-    user: {
+    owner: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "User",
-      required: [true, REQUIRED_FIELD],
-    },
-    category: {
-      //quizás un modelo de categoría
-      type: String,
-      enum: ["Clothes", "XXXXX", "XXXXX"], //pensaaaaaaaaaaaaaaaaaaaaaaar y preguntar como hacer subcategorias
       required: [true, REQUIRED_FIELD],
     },
     shipment: {
@@ -44,13 +47,19 @@ const productSchema = new mongoose.Schema(
   {
     timestamps: true,
   }
+
+  // status: {
+  //   type: String,
+  //   enum: ["avalaible", "closed"],
+  //   default: "avalaible",
+  // },
 );
 
-productSchema.virtual("bids", {
-  ref: "Bid",
-  foreignField: "product", //nombrar luego el producto en el esquema del bid
+productSchema.virtual("auctions", {
+  ref: "Auction",
+  foreignField: "product",
   localField: "_id",
-  justOne: false,
+  justOne: true, //Debemos poner false? que pasa si no ponemos nada o true??
 });
 
 const Product = mongoose.model("Product", productSchema);

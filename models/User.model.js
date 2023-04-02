@@ -10,15 +10,19 @@ const EMAIL_PATTERN =
 
 const UserSchema = new mongoose.Schema(
 
-    //PONEMOS USERNAME??
   {
-    firstName: {
+    username: {
       type: String,
-      required: [true, REQUIRED_FIELD]
+      minlength: [5, INVALID_LENGTH],
+      maxlength: [10, INVALID_LENGTH],
+      required: [true, REQUIRED_FIELD],
+      unique: true,
+      lowercase: true, 
     },
-    lastName: {
+    bio: {
       type: String,
-      required: [true, REQUIRED_FIELD]
+      minlength: [5, INVALID_LENGTH],
+      maxlength: [50, INVALID_LENGTH],
     },
     email: {
       type: String,
@@ -63,6 +67,15 @@ UserSchema.pre('save', function(next) {
 UserSchema.methods.checkPassword = function(passwordToCompare) {
   return bcrypt.compare(passwordToCompare, this.password);
 }
+
+UserSchema.virtual("bids", {
+  ref: "Bid",
+  foreignField: "bidder", 
+  localField: "_id",
+  justOne: false,
+});
+
+
 
 const User = mongoose.model('User', UserSchema);
 
