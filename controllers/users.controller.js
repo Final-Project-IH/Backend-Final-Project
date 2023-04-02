@@ -43,12 +43,15 @@ module.exports.getCurrentUser = (req, res, next) => {
 
 
 module.exports.editProfile = (req, res, next) => {
-  if (req.file) {
-    req.body.image = req.file.path;
-  }
-  User.findByIdAndUpdate(req.currentUserId, req.body, {image: req.body})
+  // if (req.file) {
+  //   req.body.image = req.file.path;
+  // } HAY QUE METERLE IMAGEN PERO AUN NO TENEMOS CLOUDINARY
+  const { username, bio } = req.body;
+  console.log('username', username)
+  console.log("bio", bio)
+  User.findByIdAndUpdate(req.currentUserId, {username, bio}, {image: req.body})
   .then((userUpdated)=> {
-    res.json(userUpdated)
+    res.status(StatusCodes.OK).json(userUpdated)
   })
   .catch((err) => next(err))
 }

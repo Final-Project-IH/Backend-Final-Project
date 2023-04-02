@@ -12,7 +12,7 @@ const AuctionSchema = new mongoose.Schema({
 	bids: {
 		type: mongoose.Types.ObjectId,
 		ref: "Bid",
-		// required: true, //esto no creo
+		
 	},
 	// start: {  //preguntar cómo se tendría que poner
 	// 	type: Date,

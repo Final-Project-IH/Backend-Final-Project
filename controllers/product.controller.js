@@ -38,28 +38,38 @@ module.exports.list = (req, res, next) => {
     .then((products) => {
       res.json(products);
     })
-    .catch();
+    .catch(next);
+};
+
+module.exports.userlist = (req, res, next) => {
+  Product.find({ owner: req.currentUserId })
+    .populate("owner")
+    .then((products) => {
+      res.json(products);
+    })
+    .catch(next);
 };
 
 module.exports.detail = (req, res, next) => {
   Product.findById(req.params.id)
-  .then((product)=>{
-    res.status(200).json(product)
-  })
-  .catch(next)
-}
+    .then((product) => {
+      res.status(200).json(product);
+    })
+    .catch(next);
+};
 
 /*Search*/
 
 module.exports.searchBar = (req, res, next) => {
+  const { name } = req.body;
   Product.find({
-    name: { $regex: req.body.value, $options: "i" }
+    name: { $regex: name, $options: "i" },
   })
-  .then((products)=>{
-    res.json(products)
-  })
-  .catch((err) => next(err))
-}
+    .then((products) => {
+      res.json(products);
+    })
+    .catch((err) => next(err));
+};
 
 /*Favorites*/
 

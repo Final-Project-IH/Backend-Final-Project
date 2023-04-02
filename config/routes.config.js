@@ -34,8 +34,13 @@ router.post(
   productController.create
 );
 router.get("/products", productController.list);
+router.get(
+  "/products/me",
+  authMiddleware.isAuthenticated,
+  productController.userlist
+);
 router.get("/products/:id", productController.detail);
-router.post("/products/search", productController.searchBar)
+router.post("/products/search", productController.searchBar);
 
 /* Auction */
 
