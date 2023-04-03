@@ -1,50 +1,39 @@
-const mongoose = require("mongoose")
+const mongoose = require("mongoose");
 
 const AuctionSchema = new mongoose.Schema({
-	product: {
-		type: mongoose.Types.ObjectId,
-		ref: "Product",
-		required: true,
-	},
-	price: {
-		type: Number,  //está bien? como vincularíamos este price con el precio inicial del producto??
-	}, 
-	bids: {
-		type: mongoose.Types.ObjectId,
-		ref: "Bid",
-		
-	},
-	// start: {  //preguntar cómo se tendría que poner
-	// 	type: Date,
-	// 	default: Date.now,
-	// 	required: true,
-	// },
-	// end: {
-	// 	type: Date,
-	// 	default: Date.now,
-	// 	required: true,
-	// },
-	status: {
-		type: String,
-		enum: ["Available", "Closed"],
-		default: "Available",
-	}
+  product: {
+    type: mongoose.Types.ObjectId,
+    ref: "Product",
+    required: true,
+  },
+  initialPrice: {
+    type: Number,
+  },
+  start: {
+    type: Date,
+    default: Date.now,
+  },
+  end: {
+    type: Date,
+    required: true,
+  },
+  status: {
+    type: String,
+    enum: ["Available", "Closed"],
+    default: "Available",
+  },
+  owner: {
+    type: mongoose.Types.ObjectId,
+    ref: "User",
+    required: true,
+  },
+});
 
-// owner: {
-	// 	type: mongoose.Types.ObjectId,
-	// 	ref: "User",
-	// 	required: true,
-	// },
-
-})
-
-// AuctionSchema.virtual("bids", {
-// 	ref: "Bid",
-// 	foreignField: "product", 
-// 	localField: "_id",
-// 	justOne: false,
-//   });
-
+AuctionSchema.virtual("bids", {
+	ref: "Bid",
+	foreignField: "auction",
+	localField: "_id",
+  });
 
 // ESTO LUEGO:
 
@@ -55,7 +44,13 @@ const AuctionSchema = new mongoose.Schema({
 //   justOne: false
 // })
 
+const Auction = mongoose.model("Auction", AuctionSchema);
 
-const Auction = mongoose.model("Auction", AuctionSchema)
+module.exports = Auction;
 
-module.exports = Auction
+
+  // bids: {
+  // 	type: [mongoose.Types.ObjectId], //mirar virtual
+  // 	ref: "Bid",
+
+  // },

@@ -11,23 +11,35 @@ module.exports.create = (req, res, next) => {
     name,
     shortDescription,
     description,
-    initialPrice,
     state,
     image,
     owner,
     shipment,
+    category,
+    subcategories,
+    initialPrice,
+    start,
+    end
   } = req.body;
   Product.create({
     name,
     shortDescription,
     description,
-    initialPrice,
     state,
     image,
     owner,
     shipment,
+    category,
+    subcategories
   })
     .then((productCreated) => {
+      Auction.create({
+        product: productCreated._id,
+        initialPrice,
+        start,
+        end,
+        owner
+      })
       res.status(StatusCodes.CREATED).json(productCreated);
     })
     .catch(next);

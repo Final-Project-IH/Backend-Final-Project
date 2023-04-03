@@ -3,6 +3,7 @@ const authController = require("../controllers/auth.controller");
 const usersController = require("../controllers/users.controller");
 const productController = require("../controllers/product.controller");
 const auctionController = require("../controllers/auction.controller");
+const bidController = require("../controllers/bid.controller");
 
 const authMiddleware = require("../middlewares/auth.middleware");
 
@@ -39,15 +40,15 @@ router.get(
   authMiddleware.isAuthenticated,
   productController.userlist
 );
-router.get("/products/:id", productController.detail);
+router.get("/products/:id/:auctionId", productController.detail);
 router.post("/products/search", productController.searchBar);
 
 /* Auction */
 
 router.post(
-  "/products/:id/create-auction",
+  "/products/:id/:auctionId",
   authMiddleware.isAuthenticated,
-  auctionController.create
+  bidController.create
 );
 
 /* Favorites */

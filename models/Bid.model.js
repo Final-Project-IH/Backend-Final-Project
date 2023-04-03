@@ -1,9 +1,9 @@
 const mongoose = require("mongoose")
 
 const BidSchema = new mongoose.Schema({
-	product: {
+	auction: {
 		type: mongoose.Types.ObjectId,
-		ref: "Product",
+		ref: "Auction",
 		required: true,
 	},
 	offer: {           //hay que controlar que no puedas ofertar menos precio que el actual de la subasta

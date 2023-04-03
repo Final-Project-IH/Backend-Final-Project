@@ -1,0 +1,18 @@
+[
+  {
+    "title": "Fashion",
+    "subcategory": ["Clothes", "Accesories", "Shoes"]
+  },
+  {
+    "title": "Home",
+    "subcategory": ["Decoration", "Furniture", "Kitchenware"]
+  },
+  {
+    "title": "Art",
+    "subcategory": ["Prints", "Photography", "Frames", "Books", "Music"]
+  },
+  {
+    "title": "Antiques",
+    "subcategory": ["Home & Decoration", "Art & Frames", "Fashion & Accesories"]
+  }
+]
