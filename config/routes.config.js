@@ -34,29 +34,22 @@ router.post(
   authMiddleware.isAuthenticated,
   productController.create
 );
-// router.get("/products", productController.list); ESTO YA NO SIRVE PORQUE NOS CONVIENE TRAERNOS LAS AUCTS
 
 router.get(
   "/products/me",
   authMiddleware.isAuthenticated,
   productController.userlist
 );
-// router.get("/products/:id/:auctionId", productController.detail); ESTO YA NO SIRVE PORQUE NOS CONVIENE TRAERNOS LAS AUCTS
-router.post("/products/search", productController.searchBar);
+
+router.post("/products/search", productController.searchBar); //ES POSIBLE QUE ESTO TENGA QUE CAMBIAR EN UN FUTURO POR AUCTION
 
 /* Auction */
-
-// router.post(
-//   "/products/:id/:auctionId",
-//   authMiddleware.isAuthenticated,
-//   bidController.create
-// );
-
-
 
 router.get("/products", auctionController.list);
 
 router.get("/products/:id", auctionController.detail);
+
+router.get("/products/category/:id", auctionController.filterCategory);
 
 /* Bid */
 
@@ -66,7 +59,8 @@ router.post(
   bidController.create
 );
 
-router.get("/products/:id/bidList", bidController.list)
+router.get("/products/:id/bidList", bidController.list);
+
 /* Favorites */
 
 router.post(
