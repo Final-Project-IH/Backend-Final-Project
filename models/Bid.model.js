@@ -15,7 +15,13 @@ const BidSchema = new mongoose.Schema({
 		ref: "User",
 		required: true,
 	}
-})
+},
+{
+    timestamps: true,
+    toJSON: {
+      virtuals: true
+    }
+  })
 
 
 const Bid = mongoose.model("Bid", BidSchema)

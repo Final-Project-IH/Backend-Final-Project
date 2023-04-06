@@ -13,7 +13,7 @@ router.post("/login", authController.login);
 
 /* Users */
 
-router.post("/users", usersController.create);
+router.post("/register", usersController.create);
 router.get("/users", usersController.list);
 router.get(
   "/users/me",
@@ -34,23 +34,39 @@ router.post(
   authMiddleware.isAuthenticated,
   productController.create
 );
-router.get("/products", productController.list);
+// router.get("/products", productController.list); ESTO YA NO SIRVE PORQUE NOS CONVIENE TRAERNOS LAS AUCTS
+
 router.get(
   "/products/me",
   authMiddleware.isAuthenticated,
   productController.userlist
 );
-router.get("/products/:id/:auctionId", productController.detail);
+// router.get("/products/:id/:auctionId", productController.detail); ESTO YA NO SIRVE PORQUE NOS CONVIENE TRAERNOS LAS AUCTS
 router.post("/products/search", productController.searchBar);
 
 /* Auction */
 
+// router.post(
+//   "/products/:id/:auctionId",
+//   authMiddleware.isAuthenticated,
+//   bidController.create
+// );
+
+
+
+router.get("/products", auctionController.list);
+
+router.get("/products/:id", auctionController.detail);
+
+/* Bid */
+
 router.post(
-  "/products/:id/:auctionId",
+  "/products/:id/createBid",
   authMiddleware.isAuthenticated,
   bidController.create
 );
 
+router.get("/products/:id/bidList", bidController.list)
 /* Favorites */
 
 router.post(

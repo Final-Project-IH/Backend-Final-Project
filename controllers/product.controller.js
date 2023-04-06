@@ -45,13 +45,15 @@ module.exports.create = (req, res, next) => {
     .catch(next);
 };
 
-module.exports.list = (req, res, next) => {
-  Product.find()
-    .then((products) => {
-      res.json(products);
-    })
-    .catch(next);
-};
+// module.exports.list = (req, res, next) => {
+//   Product.find()
+//     .then((products) => {
+//       res.json(products);
+//     })
+//     .catch(next);
+// }; ESTO YA NO SIRVE PORQUE NOS CONVIENE TRAERNOS LAS AUCTS
+
+// module.exports.fashionList = (req, res, next)
 
 module.exports.userlist = (req, res, next) => {
   Product.find({ owner: req.currentUserId })
@@ -62,13 +64,14 @@ module.exports.userlist = (req, res, next) => {
     .catch(next);
 };
 
-module.exports.detail = (req, res, next) => {
-  Product.findById(req.params.id)
-    .then((product) => {
-      res.status(200).json(product);
-    })
-    .catch(next);
-};
+// module.exports.detail = (req, res, next) => {
+//   Product.findById(req.params.id)
+//     .then((product) => {
+//       res.status(200).json(product);
+//     })
+//     .catch(next);
+// }; ESTO YA NO SIRVE PORQUE NOS CONVIENE TRAERNOS LAS AUCTS
+
 
 /*Search*/
 
