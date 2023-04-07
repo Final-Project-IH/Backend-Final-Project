@@ -48,6 +48,20 @@ router.post("/products/search", productController.searchBar); //ES POSIBLE QUE E
 
 router.get("/products/category", categoryController.categoryList);
 router.get("/products/category/:id", auctionController.filterCategory); //para traer los productos de determinada categoría
+router.get("/products/category/:id/clothes", auctionController.filterClothes)
+router.get("/products/category/:id/accesories", auctionController.filterAccesories)
+router.get("/products/category/:id/shoes", auctionController.filterShoes)
+router.get("/products/category/:id/decoration", auctionController.filterDecoration)
+router.get("/products/category/:id/furniture", auctionController.filterFurniture)
+router.get("/products/category/:id/kitchenware", auctionController.filterKitchenware)
+router.get("/products/category/:id/prints", auctionController.filterPrints)
+router.get("/products/category/:id/photography", auctionController.filterPhotography)
+router.get("/products/category/:id/frames", auctionController.filterFrames)
+router.get("/products/category/:id/books", auctionController.filterBooks)
+router.get("/products/category/:id/music", auctionController.filterMusic)
+router.get("/products/category/:id/antique-home-decoration", auctionController.filterAntiqueHome)
+router.get("/products/category/:id/antique-art-frames", auctionController.filterAntiqueArt)
+router.get("/products/category/:id/antique-fashion-accesories", auctionController.filterAntiqueFashion)
 
 /* Auction */
 
