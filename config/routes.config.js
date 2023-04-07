@@ -4,6 +4,7 @@ const usersController = require("../controllers/users.controller");
 const productController = require("../controllers/product.controller");
 const auctionController = require("../controllers/auction.controller");
 const bidController = require("../controllers/bid.controller");
+const categoryController = require("../controllers/category.controller");
 
 const authMiddleware = require("../middlewares/auth.middleware");
 
@@ -43,13 +44,18 @@ router.get(
 
 router.post("/products/search", productController.searchBar); //ES POSIBLE QUE ESTO TENGA QUE CAMBIAR EN UN FUTURO POR AUCTION
 
+/* Categories */
+
+router.get("/products/category", categoryController.categoryList);
+router.get("/products/category/:id", auctionController.filterCategory); //para traer los productos de determinada categoría
+
 /* Auction */
 
 router.get("/products", auctionController.list);
 
 router.get("/products/:id", auctionController.detail);
 
-router.get("/products/category/:id", auctionController.filterCategory);
+
 
 /* Bid */
 
