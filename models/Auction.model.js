@@ -43,6 +43,8 @@ AuctionSchema.virtual("bids", {
 	localField: "_id",
   });
 
+  
+
 // ESTO LUEGO:
 
 // rentSchema.virtual('favorites', {
