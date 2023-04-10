@@ -43,24 +43,18 @@ AuctionSchema.virtual("bids", {
 	localField: "_id",
   });
 
-  
+
 
 // ESTO LUEGO:
 
-// rentSchema.virtual('favorites', {
-//   ref: 'Favorite',
-//   foreignField: 'rent',
-//   localField: '_id',
-//   justOne: false
-// })
+AuctionSchema.virtual('favorites', {
+  ref: 'Favorite',
+  foreignField: 'rent',
+  localField: '_id',
+  justOne: false
+})
 
 const Auction = mongoose.model("Auction", AuctionSchema);
 
 module.exports = Auction;
 
-
-  // bids: {
-  // 	type: [mongoose.Types.ObjectId], //mirar virtual
-  // 	ref: "Bid",
-
-  // },
