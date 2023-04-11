@@ -5,6 +5,7 @@ const productController = require("../controllers/product.controller");
 const auctionController = require("../controllers/auction.controller");
 const bidController = require("../controllers/bid.controller");
 const categoryController = require("../controllers/category.controller");
+const upload = require("../config/storage.config");
 
 const authMiddleware = require("../middlewares/auth.middleware");
 
@@ -33,6 +34,7 @@ router.post(
 router.post(
   "/new-product",
   authMiddleware.isAuthenticated,
+  upload.single("image"),
   productController.create
 );
 
@@ -54,8 +56,6 @@ router.get("/products/category/:id", auctionController.filterCategory); //para t
 router.get("/products", auctionController.list);
 
 router.get("/products/:id", auctionController.detail);
-
-
 
 /* Bid */
 

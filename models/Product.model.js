@@ -20,7 +20,7 @@ const ProductSchema = new mongoose.Schema(
     description: {
       type: String,
       required: [true, REQUIRED_FIELD],
-      minlength: [50, INVALID_LENGTH],
+      minlength: [20, INVALID_LENGTH],
       maxlength: [300, INVALID_LENGTH],
     },
     state: {
@@ -30,7 +30,7 @@ const ProductSchema = new mongoose.Schema(
     },
     image: {
       type: [String],
-      validate: [v => Array.isArray(v) && v.length > 0, REQUIRED_FIELD],
+      validate: [(v) => Array.isArray(v) && v.length > 0, REQUIRED_FIELD],
     },
     owner: {
       type: mongoose.Schema.Types.ObjectId,
@@ -54,17 +54,16 @@ const ProductSchema = new mongoose.Schema(
   {
     timestamps: true,
     toJSON: {
-      virtuals: true
-    }
+      virtuals: true,
+    },
   }
-
 );
 
 ProductSchema.virtual("auctions", {
   ref: "Auction",
   foreignField: "product",
   localField: "_id",
-  justOne: true, 
+  justOne: true,
 });
 
 ProductSchema.virtual("favorites", {

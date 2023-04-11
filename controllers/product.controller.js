@@ -7,44 +7,25 @@ const User = require("../models/User.model");
 /*Products*/
 
 module.exports.create = (req, res, next) => {
-  const {
-    name,
-    shortDescription,
-    description,
-    state,
-    image,
-    owner,
-    shipment,
-    category,
-    subcategories,
-    initialPrice,
-    start,
-    end
-  } = req.body;
-  Product.create({
-    name,
-    shortDescription,
-    description,
-    state,
-    image,
-    owner,
-    shipment,
-    category,
-    subcategories
-  })
+  console.log("******* ", req.body);
+  req.body.owner = req.currentUserId;
+  if (req.file) {
+    req.body.image = req.file.path;
+  }
+  Product.create(req.body)
     .then((productCreated) => {
+      const { initialPrice, start, end } = req.body;
       Auction.create({
         product: productCreated._id,
         initialPrice,
         start,
         end,
-        owner
-      })
+        owner: req.currentUserId,
+      });
       res.status(StatusCodes.CREATED).json(productCreated);
     })
     .catch(next);
 };
-
 
 module.exports.userlist = (req, res, next) => {
   Product.find({ owner: req.currentUserId })
@@ -54,7 +35,6 @@ module.exports.userlist = (req, res, next) => {
     })
     .catch(next);
 };
-
 
 /*Search*/
 
