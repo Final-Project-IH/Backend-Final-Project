@@ -34,7 +34,7 @@ router.post(
 router.post(
   "/new-product",
   authMiddleware.isAuthenticated,
-  upload.single("image"),
+  upload.any(),
   productController.create
 );
 

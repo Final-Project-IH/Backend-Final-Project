@@ -7,12 +7,15 @@ const User = require("../models/User.model");
 /*Products*/
 
 module.exports.create = (req, res, next) => {
-  console.log("******* ", req.body);
   req.body.owner = req.currentUserId;
-  if (req.file) {
-    req.body.image = req.file.path;
+
+  let image = [];
+
+  if (req.files) {
+    image = req.files.map((file) => file.path);
   }
-  Product.create(req.body)
+  res.status(200);
+  Product.create({ ...req.body, image })
     .then((productCreated) => {
       const { initialPrice, start, end } = req.body;
       Auction.create({
