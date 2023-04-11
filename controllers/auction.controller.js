@@ -210,3 +210,14 @@ module.exports.filterDecoration = (req, res, next) => {
       })
       .catch(next);
   };
+
+  module.exports.changeStatus = (req, res, next) => {
+    Auction.findByIdAndUpdate(req.params.id, {status: "Closed"}, { new: true })
+    .populate('product')
+    .then((auction) => {
+      console.log(auction)
+      res.status(201).json(auction)
+    })
+    .catch(next);
+  }
+     
