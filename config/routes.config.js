@@ -49,13 +49,62 @@ router.post("/products/search", productController.searchBar); //ES POSIBLE QUE E
 /* Categories */
 
 router.get("/products/category", categoryController.categoryList);
-router.get("/products/category/:id", auctionController.filterCategory); //para traer los productos de determinada categoría
+router.get("/products/category/:id/fashion", auctionController.filterCategory); //para traer los productos de determinada categoría
+router.get(
+  "/products/category/:id/fashion/clothes",
+  auctionController.filterClothes
+);
+router.get(
+  "/products/category/:id/fashion/accesories",
+  auctionController.filterAccesories
+);
+router.get(
+  "/products/category/:id/fashion/shoes",
+  auctionController.filterShoes
+);
+router.get("/products/category/:id/home", auctionController.filterCategory);
+router.get(
+  "/products/category/:id/home/decoration",
+  auctionController.filterDecoration
+);
+router.get(
+  "/products/category/:id/home/furniture",
+  auctionController.filterFurniture
+);
+router.get(
+  "/products/category/:id/home/kitchenware",
+  auctionController.filterKitchenware
+);
+router.get("/products/category/:id/art", auctionController.filterCategory);
+router.get("/products/category/:id/art/prints", auctionController.filterPrints);
+router.get(
+  "/products/category/:id/art/photography",
+  auctionController.filterPhotography
+);
+router.get("/products/category/:id/art/frames", auctionController.filterFrames);
+router.get("/products/category/:id/art/books", auctionController.filterBooks);
+router.get("/products/category/:id/art/music", auctionController.filterMusic);
+router.get("/products/category/:id/antiques", auctionController.filterCategory);
+router.get(
+  "/products/category/:id/antiques/home-decoration",
+  auctionController.filterAntiqueHome
+);
+router.get(
+  "/products/category/:id/antiques/art-frames",
+  auctionController.filterAntiqueArt
+);
+router.get(
+  "/products/category/:id/antiques/fashion-accesories",
+  auctionController.filterAntiqueFashion
+);
 
 /* Auction */
 
 router.get("/products", auctionController.list);
 
 router.get("/products/:id", auctionController.detail);
+
+router.post("/products/:id/changeStatus", auctionController.changeStatus);
 
 /* Bid */
 
