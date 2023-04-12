@@ -1,9 +1,9 @@
 const mongoose = require("mongoose");
 
 const favoriteSchema = new mongoose.Schema({
-  product: {
+  auction: {
     type: mongoose.Types.ObjectId,
-    ref: "Product",
+    ref: "Auction",
     required: true,
   },
 

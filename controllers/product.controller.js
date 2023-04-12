@@ -56,13 +56,13 @@ module.exports.searchBar = (req, res, next) => {
 
 module.exports.favorites = (req, res, next) => {
   const user = req.currentUserId;
-  const product = req.params.id;
-  const favorites = { user, product };
+  const auction = req.params.id;
+  const favorites = { user, auction };
 
-  Favorite.findOne({ user, product }).then((favorite) => {
+  Favorite.findOne({ user, auction }).then((favorite) => {
     if (favorite) {
       return Favorite.findByIdAndDelete(favorite.id).then((deletedFavorite) => {
-        res.status(204).json({ fav: deletedFavorite });
+        res.status(204);
       });
     } else {
       return Favorite.create(favorites).then(() => {

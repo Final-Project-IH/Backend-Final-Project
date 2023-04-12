@@ -79,6 +79,12 @@ ProductSchema.virtual("categories", {
   localField: "_id",
 });
 
+ProductSchema.virtual("bids", {
+  ref: "Bid",
+  foreignField: "title",
+  localField: "_id",
+});
+
 const Product = mongoose.model("Product", ProductSchema);
 
 module.exports = Product;

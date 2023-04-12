@@ -6,7 +6,7 @@ const BidSchema = new mongoose.Schema({
 		ref: "Auction",
 		required: true,
 	},
-	offer: {           //hay que controlar que no puedas ofertar menos precio que el actual de la subasta
+	offer: {     
 		type: Number,
         required: true,  
 	}, 
