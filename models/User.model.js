@@ -82,7 +82,7 @@ UserSchema.virtual("favorites", {
   ref: "Favorite",
   foreignField: "user",
   localField: "_id",
-  justOne: true,
+  justOne: false,
 });
 
 UserSchema.virtual("products", {

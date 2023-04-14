@@ -6,7 +6,6 @@ const favoriteSchema = new mongoose.Schema({
     ref: "Auction",
     required: true,
   },
-
   user: {
     type: mongoose.Types.ObjectId,
     ref: "User",

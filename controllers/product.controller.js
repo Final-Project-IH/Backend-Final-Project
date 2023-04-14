@@ -62,25 +62,22 @@ module.exports.favorites = (req, res, next) => {
   Favorite.findOne({ user, auction }).then((favorite) => {
     if (favorite) {
       return Favorite.findByIdAndDelete(favorite.id).then((deletedFavorite) => {
-        res.status(204);
+        res.status(204).json({ favorites });
       });
     } else {
       return Favorite.create(favorites).then(() => {
-        res.status(201).json({ ok: favorites });
+        res.status(201).json({ favorites });
       });
     }
   });
 };
 
+
 module.exports.listFavorites = (req, res, next) => {
-  User.findById(req.currentUserId)
-    .populate("favorites")
-    .then((user) => {
-      return Favorite.find({ user: req.currentUserId })
-        .populate("user")
-        .then((favorites) => {
-          res.status(200).json({ favorites });
-        });
-    })
-    .catch(next);
-};
+  Favorite.find({user: req.currentUserId})
+  .populate("user")
+  .then((favorites)=>{
+    res.status(200).json({ favorites })
+  })
+  .catch(next)
+}
