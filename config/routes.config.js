@@ -5,6 +5,7 @@ const productController = require("../controllers/product.controller");
 const auctionController = require("../controllers/auction.controller");
 const bidController = require("../controllers/bid.controller");
 const categoryController = require("../controllers/category.controller");
+const notificationController = require("../controllers/notification.controller");
 const upload = require("../config/storage.config");
 
 const authMiddleware = require("../middlewares/auth.middleware");
@@ -128,5 +129,19 @@ router.get(
   authMiddleware.isAuthenticated,
   productController.listFavorites
 );
+
+/* Notifications */
+
+router.get(
+  "/users/me/notifications",
+  authMiddleware.isAuthenticated,
+  notificationController.listNotifications
+);
+
+router.patch(
+  '/users/me/notifications',
+  authMiddleware.isAuthenticated,
+  notificationController.markManyAsRead
+)
 
 module.exports = router;

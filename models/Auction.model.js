@@ -51,6 +51,13 @@ AuctionSchema.virtual('favorites', {
   justOne: false
 })
 
+AuctionSchema.virtual('notifications', {
+  ref: 'Notification',
+  foreignField: 'auction',
+  localField: '_id',
+  justOne: false
+})
+
 const Auction = mongoose.model("Auction", AuctionSchema);
 
 module.exports = Auction;

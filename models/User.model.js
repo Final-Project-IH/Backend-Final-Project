@@ -95,6 +95,13 @@ UserSchema.virtual("products", {
   justOne: true,
 });
 
+UserSchema.virtual("notifications", {
+  ref: "Notification",
+  foreignField: "user",
+  localField: "_id",
+  justOne: false,
+});
+
 const User = mongoose.model("User", UserSchema);
 
 module.exports = User;
