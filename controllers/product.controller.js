@@ -57,16 +57,16 @@ module.exports.searchBar = (req, res, next) => {
 module.exports.favorites = (req, res, next) => {
   const user = req.currentUserId;
   const auction = req.params.id;
-  const favorites = { user, auction };
+  const newFavorite = { user, auction };
 
   Favorite.findOne({ user, auction }).then((favorite) => {
     if (favorite) {
       return Favorite.findByIdAndDelete(favorite.id).then((deletedFavorite) => {
-        res.status(204).json({ favorites });
+        res.status(200).json(favorite);
       });
     } else {
-      return Favorite.create(favorites).then(() => {
-        res.status(201).json({ favorites });
+      return Favorite.create(newFavorite).then((createdFavorite) => {
+        res.status(201).json(createdFavorite);
       });
     }
   });

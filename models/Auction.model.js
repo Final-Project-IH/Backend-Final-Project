@@ -44,12 +44,9 @@ AuctionSchema.virtual("bids", {
   });
 
 
-
-// ESTO LUEGO:
-
 AuctionSchema.virtual('favorites', {
   ref: 'Favorite',
-  foreignField: 'rent',
+  foreignField: 'auction',
   localField: '_id',
   justOne: false
 })

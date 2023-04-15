@@ -31,7 +31,7 @@ module.exports.getUser = (req, res, next) => {
 
 module.exports.getCurrentUser = (req, res, next) => {
   User.findById(req.currentUserId)
-  .populate("favorites")
+  .populate('favorites')
     .then((user) => {
       if (!user) {
         next(createError(StatusCodes.NOT_FOUND, "User not found"));

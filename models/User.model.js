@@ -50,6 +50,9 @@ const UserSchema = new mongoose.Schema(
         delete ret.password;
       },
     },
+    toObject: {
+      virtuals: true,
+    },
   }
 );
 

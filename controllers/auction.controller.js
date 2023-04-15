@@ -18,6 +18,7 @@ module.exports.detail = (req, res, next) => {
       path: "bids",
       populate: "bidder",
     })
+    .populate("favorites")
 
     .then((auction) => {
       res.status(200).json(auction);
@@ -41,7 +42,8 @@ module.exports.filterClothes = (req, res, next) => {
   Product.find({ category: req.params.id, subcategories: "Clothes" })
     .then((products) => {
       Auction.find({ product: products })
-      .populate("product")  
+      .populate("product") 
+      .populate("favorites")
       .then((auctions) => {
         res.json(auctions);
       });
