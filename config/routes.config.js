@@ -45,7 +45,7 @@ router.get(
   productController.userlist
 );
 
-router.post("/products/search", productController.searchBar); //ES POSIBLE QUE ESTO TENGA QUE CAMBIAR EN UN FUTURO POR AUCTION
+router.get("/products/search", productController.searchBar); //ES POSIBLE QUE ESTO TENGA QUE CAMBIAR EN UN FUTURO POR AUCTION
 
 /* Categories */
 
