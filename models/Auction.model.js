@@ -1,61 +1,64 @@
-const mongoose = require("mongoose")
+const mongoose = require("mongoose");
 
-const AuctionSchema = new mongoose.Schema({
-	product: {
-		type: mongoose.Types.ObjectId,
-		ref: "Product",
-		required: true,
-	},
-	price: {
-		type: Number,  //está bien? como vincularíamos este price con el precio inicial del producto??
-	}, 
-	bids: {
-		type: mongoose.Types.ObjectId,
-		ref: "Bid",
-		required: true,
-	},
-	start: {  //preguntar cómo se tendría que poner
-		type: Date,
-		default: Date.now,
-		required: true,
-	},
-	end: {
-		type: Date,
-		default: Date.now,
-		required: true,
-	},
-	status: {
-		type: String,
-		enum: ["Available", "Closed"],
-		default: "Available",
-	}
-
-// owner: {
-	// 	type: mongoose.Types.ObjectId,
-	// 	ref: "User",
-	// 	required: true,
-	// },
-
-})
+const AuctionSchema = new mongoose.Schema(
+  {
+    product: {
+      type: mongoose.Types.ObjectId,
+      ref: "Product",
+      required: true,
+    },
+    initialPrice: {
+      type: Number,
+    },
+    start: {
+      type: Date,
+      default: Date.now,
+    },
+    end: {
+      type: Date,
+      required: true,
+    },
+    status: {
+      type: String,
+      enum: ["Available", "Closed"],
+      default: "Available",
+    },
+    owner: {
+      type: mongoose.Types.ObjectId,
+      ref: "User",
+      required: true,
+    },
+  },
+  {
+    timestamps: true,
+    toJSON: {
+      virtuals: true
+    }
+  }
+);
 
 AuctionSchema.virtual("bids", {
 	ref: "Bid",
-	foreignField: "product", 
+	foreignField: "auction",
 	localField: "_id",
-	justOne: false,
   });
 
 
-// ESTO LUEGO:
+AuctionSchema.virtual('favorites', {
+  ref: 'Favorite',
+  foreignField: 'auction',
+  localField: '_id',
+  justOne: false
+})
 
-// rentSchema.virtual('favorites', {
-//   ref: 'Favorite',
-//   foreignField: 'rent',
-//   localField: '_id',
-//   justOne: false
-// })
+AuctionSchema.virtual('notifications', {
+  ref: 'Notification',
+  foreignField: 'auction',
+  localField: '_id',
+  justOne: false
+})
 
+const Auction = mongoose.model("Auction", AuctionSchema);
 
-const Auction = mongoose.model("Auction", AuctionSchema)
+module.exports = Auction;
 
-module.exports = Auction

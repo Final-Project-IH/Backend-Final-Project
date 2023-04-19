@@ -1,7 +1,11 @@
 const mongoose = require("mongoose");
-const { REQUIRED_FIELD, INVALID_LENGTH, INVALID_NUMBER } = require("../config/errorMessages");
+const {
+  REQUIRED_FIELD,
+  INVALID_LENGTH,
+  INVALID_NUMBER,
+} = require("../config/errorMessages");
 
-const productSchema = new mongoose.Schema(
+const ProductSchema = new mongoose.Schema(
   {
     name: {
       type: String,
@@ -16,13 +20,8 @@ const productSchema = new mongoose.Schema(
     description: {
       type: String,
       required: [true, REQUIRED_FIELD],
-      minlength: [50, INVALID_LENGTH],
+      minlength: [20, INVALID_LENGTH],
       maxlength: [300, INVALID_LENGTH],
-    },
-    initialPrice: {
-      type: Number,
-      required: [true, REQUIRED_FIELD],
-      min:[1, INVALID_NUMBER]
     },
     state: {
       type: String,
@@ -31,7 +30,7 @@ const productSchema = new mongoose.Schema(
     },
     image: {
       type: [String],
-      required: [true, REQUIRED_FIELD],
+      validate: [(v) => Array.isArray(v) && v.length > 0, REQUIRED_FIELD],
     },
     owner: {
       type: mongoose.Schema.Types.ObjectId,
@@ -43,25 +42,49 @@ const productSchema = new mongoose.Schema(
       enum: ["Yes", "No"],
       default: "No",
     },
+    category: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Category",
+      required: [true, REQUIRED_FIELD],
+    },
+    subcategories: {
+      type: ["strings"],
+    },
   },
   {
     timestamps: true,
+    toJSON: {
+      virtuals: true,
+    },
   }
-
-  // status: {
-  //   type: String,
-  //   enum: ["avalaible", "closed"],
-  //   default: "avalaible",
-  // },
 );
 
-productSchema.virtual("auctions", {
+ProductSchema.virtual("auctions", {
   ref: "Auction",
   foreignField: "product",
   localField: "_id",
-  justOne: true, //Debemos poner false? que pasa si no ponemos nada o true??
+  justOne: true,
 });
 
-const Product = mongoose.model("Product", productSchema);
+ProductSchema.virtual("favorites", {
+  ref: "Favorite",
+  foreignField: "product",
+  localField: "_id",
+  justOne: true,
+});
+
+ProductSchema.virtual("categories", {
+  ref: "Category",
+  foreignField: "title",
+  localField: "_id",
+});
+
+ProductSchema.virtual("bids", {
+  ref: "Bid",
+  foreignField: "title",
+  localField: "_id",
+});
+
+const Product = mongoose.model("Product", ProductSchema);
 
 module.exports = Product;

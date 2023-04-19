@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "start": "node app.js",
-    "dev": "nodemon app.js"
+    "dev": "nodemon app.js",
+    "seeds": "node ./seeds/categories.seeds.js"
   },
   "repository": {
     "type": "git",
@@ -19,13 +20,17 @@
   "homepage": "https://github.com/Final-Project-IH/Backend-Final-Project#readme",
   "dependencies": {
     "bcrypt": "^5.1.0",
+    "cloudinary": "^1.35.0",
     "cors": "^2.8.5",
+    "dayjs": "^1.11.7",
     "dotenv": "^16.0.3",
     "express": "^4.18.2",
     "http-errors": "^2.0.0",
     "http-status-codes": "^2.2.0",
     "jsonwebtoken": "^9.0.0",
     "mongoose": "^7.0.3",
-    "morgan": "^1.10.0"
+    "morgan": "^1.10.0",
+    "multer": "^1.4.5-lts.1",
+    "multer-storage-cloudinary": "^4.0.0"
   }
 }
