@@ -25,10 +25,26 @@ router.get(
 );
 router.get("/users/:id", usersController.getUser);
 router.post(
-  "/users/me",
+  "/users/me/editprofile",
   authMiddleware.isAuthenticated,
+  upload.any(),
   usersController.editProfile
 );
+
+router.get(
+  "/users/me/products",
+  authMiddleware.isAuthenticated,
+  auctionController.userlist
+);
+
+router.get("/users/me/bids",
+authMiddleware.isAuthenticated,
+bidController.userBidList
+),
+
+router.get("/users/me/winned", authMiddleware.isAuthenticated,
+auctionController.winnedAuct )
+
 
 /* Product */
 
@@ -37,12 +53,6 @@ router.post(
   authMiddleware.isAuthenticated,
   upload.any(),
   productController.create
-);
-
-router.get(
-  "/products/me",
-  authMiddleware.isAuthenticated,
-  productController.userlist
 );
 
 router.get("/products/search", productController.searchBar); //ES POSIBLE QUE ESTO TENGA QUE CAMBIAR EN UN FUTURO POR AUCTION
@@ -127,7 +137,7 @@ router.post(
 router.get(
   "/users/me/favorites",
   authMiddleware.isAuthenticated,
-  productController.listFavorites
+  usersController.getMyFavs
 );
 
 /* Notifications */
@@ -139,9 +149,9 @@ router.get(
 );
 
 router.patch(
-  '/users/me/notifications',
+  "/users/me/notifications",
   authMiddleware.isAuthenticated,
   notificationController.markManyAsRead
-)
+);
 
 module.exports = router;

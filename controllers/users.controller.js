@@ -1,6 +1,7 @@
 const User = require("../models/User.model");
 const createError = require("http-errors");
 const { StatusCodes } = require("http-status-codes");
+const Favorite = require("../models/Favorite.model.js");
 
 module.exports.create = (req, res, next) => {
   const { email, password, username, bio } = req.body;
@@ -31,7 +32,18 @@ module.exports.getUser = (req, res, next) => {
 
 module.exports.getCurrentUser = (req, res, next) => {
   User.findById(req.currentUserId)
-  .populate('favorites')
+    .populate({
+      path: "favorites",
+      populate: [
+        {
+          path: "auction",
+          populate: {
+            path: "product",
+          },
+        },
+      ],
+    })
+
     .then((user) => {
       if (!user) {
         next(createError(StatusCodes.NOT_FOUND, "User not found"));
@@ -43,19 +55,22 @@ module.exports.getCurrentUser = (req, res, next) => {
 };
 
 module.exports.editProfile = (req, res, next) => {
-  // if (req.file) {
-  //   req.body.image = req.file.path;
-  // } HAY QUE METERLE IMAGEN PERO AUN NO TENEMOS CLOUDINARY
-  const { username, bio } = req.body;
-  console.log("username", username);
-  console.log("bio", bio);
-  User.findByIdAndUpdate(
-    req.currentUserId,
-    { username, bio },
-    { image: req.body }
-  )
-    .then((userUpdated) => {
-      res.status(StatusCodes.OK).json(userUpdated);
+  console.log(req.files)
+  const data = {username: req.body.username, bio: req.body.bio}
+  if(req.files){
+    data.image = req.files[0].path
+  }
+  const { username, bio } = req.body
+	User.findByIdAndUpdate(req.currentUserId, data , { new: true, runValidators: true })
+		.then((updated) => res.status(200).send(updated))
+		.catch(next)
+};
+
+module.exports.getMyFavs = (req, res, next) => {
+  Favorite.find({ user: req.currentUserId })
+  .populate({ path: 'auction', populate: 'product' })
+    .then((favorites) => {
+      res.json(favorites);
     })
-    .catch((err) => next(err));
+    .catch(next);
 };

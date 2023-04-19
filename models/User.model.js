@@ -24,7 +24,7 @@ const UserSchema = new mongoose.Schema(
     bio: {
       type: String,
       minlength: [5, INVALID_LENGTH],
-      maxlength: [50, INVALID_LENGTH],
+      maxlength: [300, INVALID_LENGTH],
     },
     email: {
       type: String,
@@ -39,6 +39,11 @@ const UserSchema = new mongoose.Schema(
       required: [true, REQUIRED_FIELD],
       minlength: [8, INVALID_LENGTH],
     },
+    image: {
+      type: String,
+      default:
+        "https://cdn.icon-icons.com/icons2/1378/PNG/512/avatardefault_92824.png",
+    }
   },
   {
     timestamps: true,
@@ -100,6 +105,13 @@ UserSchema.virtual("notifications", {
   foreignField: "user",
   localField: "_id",
   justOne: false,
+});
+
+UserSchema.virtual("auctions", {
+  ref: "Auction",
+  foreignField: "owner",
+  localField: "_id",
+  justOne: true,
 });
 
 const User = mongoose.model("User", UserSchema);

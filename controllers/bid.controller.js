@@ -47,3 +47,14 @@ module.exports.list = (req, res, next) => {
     .catch(next);
 };
 
+module.exports.userBidList = (req, res, next) => {
+  Bid.find({ bidder: req.currentUserId })
+    .populate({
+      path: "auction",
+      populate: "product",
+    })
+    .then((products) => {
+      res.json(products);
+    })
+    .catch(next);
+};

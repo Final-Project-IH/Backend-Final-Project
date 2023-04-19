@@ -30,14 +30,6 @@ module.exports.create = (req, res, next) => {
     .catch(next);
 };
 
-module.exports.userlist = (req, res, next) => {
-  Product.find({ owner: req.currentUserId })
-    .populate("owner")
-    .then((products) => {
-      res.json(products);
-    })
-    .catch(next);
-};
 
 /*Search*/
 
@@ -62,22 +54,21 @@ module.exports.favorites = (req, res, next) => {
   Favorite.findOne({ user, auction }).then((favorite) => {
     if (favorite) {
       return Favorite.findByIdAndDelete(favorite.id).then((deletedFavorite) => {
-        res.status(200).json(favorite);
+        res.status(200).json({ removed: true, favorite: deletedFavorite});
       });
     } else {
       return Favorite.create(newFavorite).then((createdFavorite) => {
-        res.status(201).json(createdFavorite);
+        res.status(201).json({ removed: false, favorite: createdFavorite});
       });
     }
   });
 };
 
-
 module.exports.listFavorites = (req, res, next) => {
-  Favorite.find({user: req.currentUserId})
-  .populate("user")
-  .then((favorites)=>{
-    res.status(200).json({ favorites })
-  })
-  .catch(next)
-}
+  Favorite.find({ user: req.currentUserId })
+    .populate("user")
+    .then((favorites) => {
+      res.status(200).json({ favorites });
+    })
+    .catch(next);
+};
