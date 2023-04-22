@@ -115,6 +115,8 @@ router.get("/products", auctionController.list);
 
 router.get("/products/:id", auctionController.detail);
 
+router.get("/products/:id/winned", auctionController.detail);
+
 router.post("/products/:id/changeStatus", auctionController.changeStatus);
 
 /* Bid */

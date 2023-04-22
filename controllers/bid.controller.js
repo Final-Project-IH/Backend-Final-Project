@@ -47,6 +47,7 @@ module.exports.list = (req, res, next) => {
     .catch(next);
 };
 
+
 module.exports.userBidList = (req, res, next) => {
   Bid.find({ bidder: req.currentUserId })
     .populate({
@@ -54,7 +55,28 @@ module.exports.userBidList = (req, res, next) => {
       populate: "product",
     })
     .then((products) => {
-      res.json(products);
+      const uniqueBids = [];
+      products.forEach(bid => {
+        const theBidIndex = uniqueBids.findIndex(pushedBid => pushedBid.auction._id.toString() === bid.auction._id.toString());
+        if (theBidIndex === -1) {
+          uniqueBids.push(bid);
+        } else if (bid.offer > uniqueBids[theBidIndex].offer) {
+          uniqueBids.splice(theBidIndex, 1, bid);
+        }
+      });
+      res.json(uniqueBids);
     })
     .catch(next);
 };
+
+// module.exports.userBidList = (req, res, next) => {
+//   Bid.find({ bidder: req.currentUserId })
+//     .populate({
+//       path: "auction",
+//       populate: "product",
+//     })
+//     .then((products) => {
+//       res.json(products);
+//     })
+//     .catch(next);
+// };

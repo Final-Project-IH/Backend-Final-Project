@@ -15,13 +15,13 @@ const ProductSchema = new mongoose.Schema(
       type: String,
       required: [true, REQUIRED_FIELD],
       maxlength: [50, INVALID_LENGTH],
-      minlength: [20, INVALID_LENGTH],
+      minlength: [10, INVALID_LENGTH],
     },
     description: {
       type: String,
       required: [true, REQUIRED_FIELD],
-      minlength: [20, INVALID_LENGTH],
-      maxlength: [300, INVALID_LENGTH],
+      minlength: [50, INVALID_LENGTH],
+      maxlength: [500, INVALID_LENGTH],
     },
     state: {
       type: String,
